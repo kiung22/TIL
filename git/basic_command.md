@@ -64,6 +64,3 @@
 - `git push <원격저장소 이름> <올릴 브랜치 이름>`
   - `git push origin master`
 - commit history를 원격 저장소에 업로드
-
-
-
