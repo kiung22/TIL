@@ -1,6 +1,6 @@
 # git command
 
-> git 기초 명령어 정리
+> git 기초 정리
 
 
 
@@ -38,6 +38,7 @@
 ### remote add
 
 - `git remote add <별명> <주소>`
+  - `git remote add origin URL`
 - 원격저장소 주소를 등록
 
 
@@ -64,3 +65,33 @@
 - `git push <원격저장소 이름> <올릴 브랜치 이름>`
   - `git push origin master`
 - commit history를 원격 저장소에 업로드
+
+
+
+### clone
+
+- `git clone URL 폴더이름(생략 가능) `
+- git을 통해 다른 사람의 프로젝트 폴더를 복제
+
+
+
+### pull
+
+- `git pull origin master`
+- 다른 사람이 push한 코드를 다운로드
+
+
+
+## 필수 파일
+
+### README.md
+
+- 프로젝트 설명
+
+
+
+### .gitignore
+
+- 자동 생성되는 찌꺼기 파일들이 git에 업로드되는 것을 막아줌.
+- [gitignore.io](https://www.toptal.com/developers/gitignore)
+  - 생성 후 나온 페이지의 글자를 복사하여 .gitignore에 붙여넣기

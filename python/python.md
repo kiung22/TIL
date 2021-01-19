@@ -92,7 +92,7 @@
 
 - `import`: 라이브러리를 불러올 때 사용
   
-- `from import `으로도 사용가능
+  - `from import `으로도 사용가능
   
 - `type()`: 데이터 타입을 반환
 
@@ -111,6 +111,10 @@
   - 범위 및 스텝 지정: `range(n, m, s)`
 
     > n부터 m-1까지 +s만큼 증가
+
+- `enumerate()`: 원소와 인덱스값을 튜플 형식으로 반환
+  - `list(enumerate(iterable))` => `[(0, 원소1), (1, 원소2), ...]`
+  - `enumerate(iterable, start=1)`로 1부터 시작 가능
 
 
 
