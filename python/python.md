@@ -42,8 +42,9 @@
 ##### 리스트(list)
 
 - `list()`, `[]`
-
 - `[원소1, 원소2, ...]`
+- `[x for x in range(5)]` => `[0, 1, 2, 3, 4]`
+  - 리스트 안에 for문을 사용하여 정의할 수 있다.
 - indexing
   -  `my_list[index]`
 - slicing
@@ -86,7 +87,16 @@
 
 
 
-## 내장함수
+## 변수
+
+- '키워드'  쓸 수 없음
+- 숫자로 시작 불가능
+- 이미 정의된 함수로 사용 x
+
+
+
+## 함수
+### 내장함수
 
 - `len()`: 리스트나 문자열의 길이를 반환
 
@@ -115,11 +125,58 @@
 - `enumerate()`: 원소와 인덱스값을 튜플 형식으로 반환
   - `list(enumerate(iterable))` => `[(0, 원소1), (1, 원소2), ...]`
   - `enumerate(iterable, start=1)`로 1부터 시작 가능
+  
+- `map(함수, iterable)`: iterable의 모든 원소에 각각 함수를 적용시켜줌
+
+  - `list(map(int, ['12', '23', '43']))` => `[12, 23, 43]`
 
 
 
-## 변수
+### 함수 선언
 
-- '키워드'  쓸 수 없음
-- 숫자로 시작 불가능
-- 이미 정의된 함수로 사용 x
+```python
+def function_name(parameter):
+    # 실행 코드
+    return result
+```
+
+
+
+## 예외 처리
+
+````python
+try:
+    # 실행할 코드
+except:
+    # 에러 발생시 실행할 코드
+    
+    
+# 특정 에러 지정
+try:
+    # 실행할 코드
+except ZeroDivisionError:
+    # ZeroDivisionError가 발생하면 실행할 코드
+````
+
+
+
+## 파일 입출력
+
+- `open(filename, mode='r', encoding='utf-8')`: 파일 열기
+  - `r`: 읽기모드
+  - `w`: 쓰기모드
+
+
+
+- `json to dict`
+
+```python
+import json
+
+# music.json 파일을 utf-8방식으로 인코딩해서 열기
+music_file = open("music.json", encoding='utf-8')
+# jso파일을 파이썬에서 사용할 수 있는 데이터구조(dict)로 변환
+music_dict = json.load(music_file)
+```
+
+> `.json`: list, dict로 이루어진 데이터파일
