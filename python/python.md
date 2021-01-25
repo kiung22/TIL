@@ -13,9 +13,38 @@
 - `'내용'`
   - `f'{변수}'` 로 포맷팅 가능
     - `f'{pi:.3}'` => 변수pi를 3자리의 숫자까지만 보여줌(3.14)
+  
 - 시퀀스 컨테이너
 
+#### 매서드
 
+1. 조회/탐색
+
+   - `.find(x)`: 'x'의 첫번째 위치를 반환, 없으면 -1을 반환
+
+   - `.index(x)`: 'x'의 첫번째 위치를 반환, 없으면 에러발생
+
+2. 값 변경
+   - `.replace(old, new[, count])`: 바꿀 대상 글자를 새로운 글자로 바꿔서 반환
+   - `.strip([chars])`: 특정한 문자들을 지정하면(지정하지 않으면 공백), 양쪽을 제거
+     - `.lstrip()`, `.rstrip()`은 왼쪽, 오른쪽을 제거
+   - `.split()`: 문자열을 특정한 단위로 나누어 리스트로 반환
+   - `.join()`: iterable 요소들을 합쳐서 문자열로 반환
+3. 문자 변형
+   - `.capitalize()`: 앞글자를 대문자로 만들어 반환
+   - `.title()`: 어포스트로피(')나 공백 이후를 대문자로 만들어 반환
+   - `.upper()`: 모든 문자를 대문자로 반환
+   - `.lower()`: 모든 문자를 소문자로 반환
+   - `.swapcase()`: 대소문자를 바꿔서 반환
+4. 검증
+   - `.isalpha()`
+   - `.isdecimal()`
+   - `.isdigit()`
+   - `.isnumeric()`
+   - `.isspace()`
+   - `.isupper()`
+   - `.istitle()`
+   - `.islower()`
 
 ### 정수(int)
 
@@ -42,14 +71,58 @@
 ##### 리스트(list)
 
 - `list()`, `[]`
+
 - `[원소1, 원소2, ...]`
+
 - `[x for x in range(5)]` => `[0, 1, 2, 3, 4]`
+  
   - 리스트 안에 for문을 사용하여 정의할 수 있다.
+  - `[x for x in range(5) if x % 2]`
+  - `[x if x < 0 else -x for x in range(-10, 11)]`
+  
 - indexing
+  
   -  `my_list[index]`
+  
 - slicing
+  
   - `my_list[0:2:2]`
-- mutable
+  
+- **mutable**
+
+  - 리스트 복사
+
+    1. 얕은 복사
+       - slice 연산자 사용 [:]
+
+       - `list()` 활용
+
+    2. 깊은 복사
+
+       - `copy.deepcopy()`
+
+       - ```python
+         import copy
+         a = [[1, 2, 3], 2, 3]
+         b = copy.deepcopy(a)
+         b[0][0] = 100
+         b[1] = '원소'
+         ```
+
+###### 매서드
+
+1. 값 추가 및 삭제
+   - `.append(x)`: 리스트에 값을 추가할 수 있다.
+   - `.extend(x)`: 리스트에 iterable값을 붙일 수 있다.
+   - `.insert(i, x)`: 위치 i에 값을 추가
+   - `.remove(x)`: 값이 x인 것을 삭제, x가 없으면 에러 발생
+   - `.pop(i)`: 위치 i에 있는 값을 삭제하며, 그 항목을 반환
+   - `.clear()`: 모든 항목을 삭제
+2. 탐색 및 정렬
+   - `.index(x)`: x의 index값을 반환, x가 없으면 에러 발생
+   - `.count(x)`: x의 개수를 반환
+   - `.sort()`: 리스트를 정렬해주고 `None`을 반환
+   - `.reverse()`: 리스트를 반대로 뒤집는다. (정렬아님!!)
 
 
 
@@ -70,20 +143,47 @@
 - `dict()`, `{}`
 
 - `{'key1': 'value1', 'key2': 'value2', ...}`
+
 - `딕셔너리['key']`
+  
   - key를 이용하여 value를 호출
+  
+- `{키: 값 for 요소 in iterable}`
+
+  ```python
+  a = [1, 2, 3]
+  {str(n): n for n in a}
+  ```
+
 - 중복된 key x
-- mutable
+
+- **mutable**
+
+###### 매서드
+
+1. 조회
+   - `.get(key[, default])`: key의 value를 가져옴, key가 없으면 `default`값을 반환
+2. 추가 및 삭제
+   - `.pop(key[, default])`: key의 value를 제거하고 반환, key가 없으면 `default`값을 반환, `default`가 없으면 에러 발생
+   - `.update()`: 값을 제공하는 key와 value로 덮어씁니다.
 
 
 
 ##### 집합(set)
 
 - `set()`
-
 - `{값1, 값2, 값3, ...}`
 - 중복된 값 x
-- mutable
+- **mutable**
+
+###### 매서드
+
+1. 추가 및 삭제
+   - `.add(x)`: x를 집합에 추가
+   - `.update(*iterable)`: 여러가지값을 추가
+   - `.remove(x)`: x를 삭제, 없으면 KeyError발생
+   - `.discard(x)`: x를 삭제, 없어도 에러가 발생하지 않는다
+   - `.pop()`: 임의의 원소를 제거해 반환
 
 
 
@@ -129,18 +229,31 @@
 - `map(함수, iterable)`: iterable의 모든 원소에 각각 함수를 적용시켜줌
 
   - `list(map(int, ['12', '23', '43']))` => `[12, 23, 43]`
+  - `list(map(lambda x, y: x * y, [1, 2, 3], [4, 5, 6]))`
+  
+- `filter(함수, iterable)`: iterable에서 함수의 반환 결과가 `True`인 것들만 구성하여 반환
 
 
 
 ### 함수 선언
 
+1. 위치인자
+
 ```python
-def function_name(parameter):
+def function_name(parameter1, parameter2):
     # 실행 코드
     return result
 ```
 
+2. 키워드인자
 
+```python
+def function_name(key1=parameter1, key2=parameter2):
+    # 실행 코드
+    return result
+```
+
+3. 
 
 ## 예외 처리
 
