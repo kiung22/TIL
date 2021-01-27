@@ -16,7 +16,7 @@
   
 - 시퀀스 컨테이너
 
-#### 매서드
+#### 메서드
 
 1. 조회/탐색
 
@@ -107,7 +107,7 @@
          b = copy.deepcopy(a)
          ```
 
-###### 매서드
+###### 메서드
 
 1. 값 추가 및 삭제
    - `.append(x)`: 리스트에 값을 추가할 수 있다.
@@ -157,7 +157,7 @@
 
 - **mutable**
 
-###### 매서드
+###### 메서드
 
 1. 조회
    - `.get(key[, default])`: key의 value를 가져옴, key가 없으면 `default`값을 반환, `default`가 없으면 `None`을 반환
@@ -174,7 +174,7 @@
 - 중복된 값 x
 - **mutable**
 
-###### 매서드
+###### 메서드
 
 1. 추가 및 삭제
    - `.add(x)`: x를 집합에 추가
@@ -247,7 +247,7 @@ def function_name(key1=parameter1, key2=parameter2):
     return result
 ```
 
-3. 
+
 
 ## 예외 처리
 
@@ -297,7 +297,6 @@ music_dict = json.load(music_file)
 - 모듈이 모이면 => 패키지
 
 - `import 모듈`: 라이브러리를 불러올 때 사용
-  - `import 모듈1, 모듈2, 모듈3`
 - `dir(모듈)`: 모듈에 있는 데이터들을 확인
 - 자주 사용할 함수를 변수에 할당하여 사용할 수 있다.
 
@@ -319,4 +318,92 @@ music_dict = json.load(music_file)
 - `from 패키지.모듈 import 데이터` : 특정한 함수 혹은 어트리뷰트만 활용할 때
 - `from 모듈 import *` : 해당하는 모듈 내의 모든 변수, 함수, 클래스를 가져올 때
 - `from 모듈 import 데이터 as 별명` : 내가 지정하는 이름을 붙여 가져올 때
+
+
+
+## OOP(객체 지향 프로그래밍)
+
+### 1. 객체
+
+> 객체는 타입(type), 속성(attribute), 조작법(method)을 가진다.
+
+1. 타입(type)
+
+- 공통된 속성과 조작법을 가진 객체들을 분류해 놓은 것
+
+2. 인스턴스(instance)
+
+- 특정 타입의 실제 예시, 실제 데이터
+
+3. 속성(attribute)
+
+- 객체의 데이터
+
+4. 조작법(method)
+
+- 객체에 적용할 수 있는 행위
+
+| 인스턴스 |          3 + 4j          |     'apple'     |
+| :------: | :----------------------: | :-------------: |
+|   타입   |         complex          |       str       |
+|   속성   | 3 + 4j.real, 3 + 4j.imag |                 |
+|  메서드  |                          | 'apple'.split() |
+
+
+
+### 2. 클래스
+
+1. 클래스 생성
+
+- `class 클래스이름:`
+
+2. 인스턴스 생성
+
+- `인스턴스 = 클래스()`
+
+3. 속성(attribute), 메서드 정의
+
+```python
+class Person:
+    # 생성자: 인스턴스가 생성될 때 호출되는 함수
+    def __init__(selt, name, age):
+        # 속성
+        self.name = name
+        self.age = age
+        print('생성자')
+        
+    # 메서드
+    def talk(self):
+        print(f'안녕, 나는 {self.name}라고 해.')
+       
+    # 소멸자: 인스턴스가 소멸되기 직전에 호출되는 함수
+    def __del__(self):
+        print('소멸자')
+```
+
+4. 매직메서드
+
+- 더블언더스코어`__`가 있는 메서드
+- `__str__(self)`: 객체를 출력할 때 보여줄 내용을 정의
+
+```python
+class Person:
+    # 생성자: 인스턴스가 생성될 때 호출되는 함수
+    def __init__(selt, name, age):
+        # 속성
+        self.name = name
+        self.age = age
+        
+    def __str__(self):
+        return f'{self.name}, {self.age}'
+```
+
+
+
+#### 2.1 상속(inheritance)
+
+- 부모 클래스의 속성과 메서드를 자식클래스가 사용할 수 있다.
+  - `class 자식클래스(부모클래스):`
+
+- `isinstance()`: 상속 관계에 있어도 True를 반환
 
