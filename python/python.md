@@ -384,7 +384,8 @@ class Person:
 4. 매직메서드
 
 - 더블언더스코어`__`가 있는 메서드
-- `__str__(self)`: 객체를 출력할 때 보여줄 내용을 정의
+- `__str__`: 객체를 출력할 때 보여줄 내용을 정의
+  - 사용자가 보기 쉬운 형태로 출력
 
 ```python
 class Person:
@@ -398,7 +399,7 @@ class Person:
         return f'{self.name}, {self.age}'
 ```
 
-
+- `__repr__`: `__str__`와 다르게 시스템이 해당객체를 인식할 수 있는 공식적인 형태로 출력
 
 #### 2.1 상속(inheritance)
 
@@ -407,3 +408,4 @@ class Person:
 
 - `isinstance()`: 상속 관계에 있어도 True를 반환
 
+- 클래스 정의할 때 `super()`를 이용하여 부모클래스를 불러와서 사용 가능
