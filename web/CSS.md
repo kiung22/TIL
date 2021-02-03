@@ -152,7 +152,7 @@ h1 {
   - span, a, img, input, label
 
 - inline-block
-  - inline처럼 한 줄에 표시 가능
+  - inline처럼 content만큼 자리를 차지
   - block처럼 width, height, margin 속성을 지정할 수 있다.
 - none
 
@@ -168,3 +168,75 @@ h1 {
   - 자신의 static자리를 다른 객체가 차지한다.
   - 모두 static일 경우에는 body 태그를 기준으로 위치를 잡게된다.
 - fixed: 화면 기준
+
+
+
+## 8. Float
+
+- 이미지 좌, 우측 주변으로 텍스트(인라인 요소)를 둘러싸는 레이아웃을 구현하는 데에 사용
+
+### 8.1 속성
+
+- none: 기본값
+- left
+- right
+
+
+
+### 8.2 Float clear
+
+- float 사용시 자기 자리가 사리지기 때문에 float하지 않은 요소들과 곂칠 수 있다.
+- clearfix: 부모태그에 클래스 설정
+
+```css
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+```
+
+- 보이지 않는 블럭을 생성하여 다른 요소가 못 올라오게 막아준다.
+
+
+
+## 9. Flexbox(Flexible Box Layout Module)
+
+- 공간 배분과 1차원 정렬
+- 메인축과 교차축이 존재
+  - 교차축은 메인축의 수직방향의 축
+- Flex Container(부모 요소), Flex item(자식 요소)
+
+```css
+.flex-container {
+    display: flex;
+}
+```
+
+
+
+### 9.1 속성
+
+- 배치 방향: 메인축의 방향을 선택(행 or 열)
+  - flex-direction: row, row-reverse, column, column-reverse
+- 축방향 정렬
+  - justify: 메인축 정렬
+  - align: 교차축 정렬
+    - content: 여러 줄
+    - items: 한줄
+    - self: flex item 개별 요소
+  - justify-content, align-items, align-self
+
+
+
+
+- flex-wrap
+  - nowrap: 모든 요소들을 한 줄에 정렬
+  - wrap: 요소들을 여러 줄에 걸쳐 정렬
+  - wrap-reverse: 요소들을 여러 줄에 걸쳐 반대로 정렬
+- flex-flow: flex-direction과 flex-wrap의 shorthand
+- flex-grow: 주축에서 남는 공간을 요소들에게 할당
+
+- order: 기본값은 0, 작을 순서부터 정렬
+
+- [개구리게임](https://flexboxfroggy.com/#ko)
