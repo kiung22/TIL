@@ -240,3 +240,23 @@ h1 {
 - order: 기본값은 0, 작을 순서부터 정렬
 
 - [개구리게임](https://flexboxfroggy.com/#ko)
+
+
+
+### 10. 미디어 쿼리
+
+- 반응형 디자인의 핵심 구성 요소
+- 쉽게 사용하기 위해 [bootstrap](https://getbootstrap.com/) 사용
+
+
+
+### 11. Animation
+
+- css에서 애니메이션동작을 줄 수 있다.
+- [animate](https://animate.style/)로 쉽게 사용할 수 있다.
+
+
+
+### 12. font 적용
+
+- [구글 폰트](https://fonts.google.com/)에서 적용

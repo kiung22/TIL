@@ -50,12 +50,12 @@
 - 기능에서는 차이가 없지만 의미를 명확히 전달하여 코드의 가독성을 높여줌
 - 검색엔진의 효율을 높여준다.
 - 대표적인 시맨틱 태그
-  - header
-  - nav
-  - aside
-  - section
-  - article
-  - footer
+  - header: 문저 전체나 섹션의 머릿말
+  - nav: 네비게이션
+  - aside: 사이드에 위치한 공간
+  - section: 문서의 컨텐츠의 그룹
+  - article: 문서, 페이지, 사이트 안에서 독립적으로 구분되는 영역
+  - footer: 문서 전체나 섹션의 마지막
 - Non semantic 요소
   - div
   - span

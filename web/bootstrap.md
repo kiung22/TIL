@@ -7,8 +7,8 @@
   - 12개의 column을 이용해서 레이아웃을 쉽게 짤 수 있다.
   - 6개의 breakpoint: `xs`, `sm`, `md`, `lg`, `xl`, `xxl`
   - `container` > `row` > `col`
-
-
+  
+- Content Delivery Network(cdn)으로 사용
 
 ## 1. Alert
 
@@ -58,6 +58,16 @@
 ## 8. Form
 
 - 설문조사, 회원가입 등 input데이터를 받을 때 사용
+- aria-describedby
+  - form 내부에 있는 input의 속성
+  - 스크린 리더가 aria-describedby의 값을 id값으로 가지는 요소를 읽어준다.
+  - 웹 접근성을 고려한 것!!
+- 웹 접근성
+  - [널리](https://nuli.navercorp.com/)에서 체험 가능
 
+## 9. Icon
 
+- 부트스트랩 icon 탭에서 cdn으로 사용 가능
+- [font awesome](https://fontawesome.com/)
 
+- i태그는 원래 이탤릭체를 쓸 때 사용하는 인라인 태그
