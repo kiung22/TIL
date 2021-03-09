@@ -87,15 +87,110 @@
 
 
 
-## 장고 작성시 주의사항
-
-- app 이름은 `복수형`
-- app 생성(startapp) 후 등록(settings.py에 추가)
-
-
-
 ## Variable routing
 
 - 주소 자체를 변수처럼 사용
-
 - `path('hello/<str:name>/', views.hello),`
+
+
+
+## 작성 순서
+
+1. `django-admin startproject 프로젝트이름 .` 프로젝트 생성(마지막 .은 현재 폴더에 바로 생성하겠다는 의미!)
+2. `python manage.py startapp 앱이름` app 생성 후 등록(settings.py => INSTALLED_APPS에 추가) (app 이름은 `복수형`으로)
+3. project폴더의 `urls.py`에서 앱 path 추가
+
+```python
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('articles/', include('articles.urls')),
+    path('pages/', include('pages.urls')),
+]
+```
+
+4. app폴더에 `urls.py`를 만든다.
+
+```python
+from django.urls import path
+from . import views
+
+app_name = 'articles'	# 템플릿에서 url태그를 사용할 때 활용된다.
+
+urlpatterns = [
+    path('index/', views.index, name='index'),
+]
+```
+
+> app이 많아지면 같은 이름의 템플릿이 생기게 되기 때문에 app폴더안에서 urls.py를 만들어 관리한다.
+
+5. app폴더의 `views.py`
+
+```python
+from django.shortcuts import render
+
+def index(request):
+    return render(request, 'articles/index.html')
+```
+
+6. `peoject폴더/templates/base.html` 생성
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container">
+      
+    {% block content %}
+    {% endblock content %}
+      
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>
+```
+
+> 모든 페이지에서 적용되는 공통 디자인을 base.html에 생성하여 중복코드를 최소화해준다.(상속)
+
+7. `project폴더/settings.py`에서 TEMPLATES리스트에 DIRS 추가
+
+```python
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'pjt' / 'templates'],	# 여기에 경로 추가!!
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+```
+
+> 앱 폴더는 기본적으로 찾게 설정이 되어있지만(APP_DIRS = True) 프로젝트폴더의 템플릿폴더는 경로를 추가해주어야 한다.
+
+8. `app폴더/templates/app이름/index.html` 생성
+
+```django
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>여기는 articles의 index입니다.</h1>
+{% endblock contet %}
+```
+
+> templates안에 app폴더를 하나 더 만드는 이유는 장고가 templates폴더 안에 있는 모든 템플릿파일을 한군데로 모아서 찾게 되는데 이때 같은 이름의 템플릿끼리 충돌이 되는 것을 방지하기 위함이다.
