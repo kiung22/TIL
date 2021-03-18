@@ -30,6 +30,8 @@
 - `settings.py`: 프로젝트의 모든 설정을 담당한다.
   - `LANGUAGE_CODE`: 'ko-kr'
   - `TIME_ZONE`: 'Asia/Seoul'
+  - `USE_I18N`: 국제화
+  - `USE_L10N`: 현지화
 - `urls.py`: 사용자의 요청을 가장 먼저 만나는 파일
 
 ### 앱 폴더
@@ -91,6 +93,126 @@
 
 - 주소 자체를 변수처럼 사용
 - `path('hello/<str:name>/', views.hello),`
+
+
+
+## Object-Relational Mapping(ORM)
+
+- 객체와 관계형 데이터베이스의 데이터를 자동으로 매핑해주는 것을 말한다.
+
+
+
+## Migrations
+
+- 장고가 model에 생긴 변화를 반영하는 방법
+  - `makemigrations`: model을 변경한 것에 기반한 새로운 마이그레이션(설계도)을 만들 때 사용
+  - `migrate`: 새로 만든 마이그레이션을 DB에 적용
+  - `sqlmigrate`: 마이그레이션에 대한 SQL구문을 보기 위해 사용
+    - `python manage.py sqlmigrate 앱이름 마이그레이션번호`
+  - `showmigrations`: 마이그레이션 파일들이 migrate 됐는지 확인하기 위해 사용
+
+
+
+## Database API
+
+- DB API 구문: `Article.objects.all()`
+
+​	       `Class Name` . `Manager` . `QuerySet API`
+
+- [Queryset API](https://docs.djangoproject.com/en/3.1/ref/models/querysets/)
+
+- 크게 queryset으로 반환하는 메서드와 단일 객체를 반환하는 메서드로 나뉜다.
+- `Field lookup`: `get()`, `filter()`, `exclude()` 에 넣을 수 있는 다양한 조건
+
+
+
+## CRUD
+
+- Create, Read, Update, Delete를 일컫는 말
+- 대부분의 소프트웨어가 가지는 기본적인 데이터 처리 기능
+
+
+
+## django admin site
+
+- `admin.py`에서 관리자 페이지를 관리
+
+  ```python
+  from django.contrib import admin
+  from .models import Article
+  
+  # Register your models here.
+  class ArticleAdmin(admin.ModelAdmin):
+      list_display = ('pk', 'title', 'content', 'created_at', 'updated_at')
+  
+  
+  
+  admin.site.register(Article, ArticleAdmin)    # admin site에 register 하겠다.
+  ```
+
+
+
+## form
+
+- app 폴더에 forms.py파일을 만들어서 사용한다.
+- models.py에서 데이터베이스 구조를 만들었다면 forms.py에서는 사용자에게 받을 데이터 폼을 만든다.
+- [django form field](https://docs.djangoproject.com/en/3.1/ref/forms/fields/)
+
+```python
+from django import forms
+
+class ArticleForm(forms.Form):
+    title = forms.CharField()
+    content = forms.CharField()
+    yesorno = forms.BooleanField()
+    due_date = forms.DateTimeField()
+```
+
+
+
+## view decorators
+
+- 어떤 함수에 기능을 추가하고 싶을 떄, 함수를 수정하지 않고 기능을 연장해주는 함수
+- [django view decorators](https://docs.djangoproject.com/en/3.1/topics/http/decorators/)
+- GET방식이면 `@require_safe`, POST방식이면 `@require_POST`를 아니면 `@require_http_methods(['GET', 'POST'])`처럼 원하는 방식을 적어서 뷰함수 바로 위에 작성
+
+
+
+## static
+
+- 개발자가 만들어 놓은 img, css, js 파일 등 정적인 파일들을 한 곳에 모아서 관리
+- STATIC_ROOT
+  
+  - 실제 배포할 때 필요
+- STATIC_URL
+  
+  - static태그가 생성하는 url의 기본값
+- STATICFILES_DIRS
+  - settings.py에 static폴더 경로를 추가해 주어야 한다.(templates 폴더 경로를 추가하듯이 앱폴더를 제외한 곳에 있는 static폴더 경로만 추가하면 된다.)
+  
+  ```python
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [BASE_DIR / 'pinterest' / 'static',]
+    ```
+  
+    
+  
+- static 태그를 사용하려면 맨 위에서 `{% load static %}`로 로드해야 한다.
+
+
+
+## media
+
+- 사용자가 웹에서 입력한 파일들을 관리
+
+- settings.py 맨 아래에 코드를 추가해야한다.
+
+  ```python
+  MEDIA_ROOT = BASE_DIR / 'media'
+  MEDIA_URL = '/media/'
+  ```
+
+  
 
 
 
@@ -194,3 +316,38 @@ TEMPLATES = [
 ```
 
 > templates안에 app폴더를 하나 더 만드는 이유는 장고가 templates폴더 안에 있는 모든 템플릿파일을 한군데로 모아서 찾게 되는데 이때 같은 이름의 템플릿끼리 충돌이 되는 것을 방지하기 위함이다.
+
+9. `models.py` 작성
+
+   ```python
+   from django.db import models
+   
+   # Create your models here.
+   class Article(models.Model):	# 클래스 이름은 app이름의 단수형으로!!
+       title = models.CharField(max_length=10)
+       content = models.TextField()
+       created_at = models.DateTimeField(auto_now_add=True)
+       updated_at = models.DateTimeField(auto_now=True)
+   ```
+
+10. `python manage.py makemigrations` 마이그레이션 생성
+
+11. `python manage.py migrate` 마이그레이트
+
+12. `python manage.py createsuperuser`로 관리자 계정 생성
+
+13. `admin.py`에서 관리자 페이지 관리
+
+    ```python
+    from django.contrib import admin
+    from .models import Article
+    
+    # Register your models here.
+    class ArticleAdmin(admin.ModelAdmin):
+        list_display = ('pk', 'title', 'content', 'created_at', 'updated_at')
+    
+    
+    
+    admin.site.register(Article, ArticleAdmin)    # admin site에 register 하겠다.
+    ```
+
