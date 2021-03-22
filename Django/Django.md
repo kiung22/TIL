@@ -193,7 +193,7 @@ class ArticleForm(forms.Form):
   ```python
     STATIC_URL = '/static/'
     STATICFILES_DIRS = [BASE_DIR / 'pinterest' / 'static',]
-    ```
+  ```
   
     
   
@@ -213,6 +213,66 @@ class ArticleForm(forms.Form):
   ```
 
   
+
+## Authentication System
+
+- login, logout
+
+- 회원가입(UserCreationForm), 로그인(AuthenticationForm)
+
+- `from django.contrib.auth.decorators import login_required`
+
+  - 비로그인일 때에 로그인 페이지로 이동시켜준다.
+
+  ### 1. Login
+
+  - `login()`
+  - request객체과 user객체를 통해 로그인 진행
+  - Django의 session framework를 통해 id를 세션에 저장
+
+  - 세션을 Create하는 로직과 같다.
+
+  
+
+  ### 2. Logout
+
+  - `logout()`
+  - request 객체를 받으며 return이 없다.
+  - DB의 세션 데이터를 삭제하고 클라이언트 쿠키에서도 `sessionid`를 삭제
+  - 로그아웃은 세션을 Delete하는 로직과 같다.
+
+  
+
+  ### 3. 회원정보수정
+
+  - `class AbstractUser`을 상속받아 form을 만든다.
+  - `get_user_model()` method
+    - 현재 프로젝트에서 활성화된 user model을 반한
+    - 커스텀한 user model이 있을 경우는 커스텀 user model, 그렇지 않으면 User를 참조
+
+
+
+
+
+
+
+## HTTP
+
+- 비연결지향: 서버는 응답 후 접속을 끊음
+- 무상태: 상태를 저장하지 않음
+
+
+
+## Cookie
+
+- 세션 관리
+  - 로그인, 아이디 자동완성, 공지 하루 안보기, 팝업체크, 장바구니
+- 개인화
+  - 사용자 선호, 테마 등 세팅
+- 트래킹
+  - 사용자 행동을 기록, 분석
+
+
 
 
 

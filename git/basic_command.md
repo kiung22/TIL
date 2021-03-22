@@ -25,6 +25,7 @@
 
 - `git log`
 - 현재 쌓여있는 commit history를 출력
+- `git log --oneline`: 한 줄로 log를 보여줌(commit_id  commit_메세지)
 
 
 
@@ -53,10 +54,49 @@
 
 
 
+### rm
+
+- `git rm <파일이름>`
+  - 로컬 디렉토리와 git 저장소에서 모두 삭제
+- `git rm --cached <파일이름>` 
+  - git 저장소(staging area, repository)에서만 삭제
+  - 처음으로 add한 파일을 취소할 때 주로 사용
+
+
+
+### restore
+
+- staging area에 있는 파일을 제거
+
+- 처음이 아닌 파일을 add한 것을 취소할 때
+
+
+
+### reset
+
+- `git reset --hard <커밋 id>`
+  - 커밋 id는 `git log --oneline`에서 확인
+  - 커밋과 파일 모두 커밋id상태로 돌아간다.
+- `git reset --soft <커밋 id>`
+  - 커밋을 커밋id상태로 돌아간다.
+  - 하지만 staging area에는 그대로 남아있다.(add는 한 상태임)
+
+- `git reset <커밋 id>`
+  - 커밋을 커밋id상태로 돌아간다.
+  - soft와는 다르게 working directory에만 남아 있다.(add부터 해야함)
+
+
+
 ### commit
 
 - `git commit -m "커밋메세지"`
 - staging area에 올라간 파일들을 스냅샷으로 저장
+  - `git commit --amend`
+  - 최근 commit을 취소하여 staging area로 다시 보내기 때문에 수정 후에는 원래 staging area에 있던 파일과 함께 repository로 보내게 된다.
+  - `vim` 텍스트 에디터로 들어가게 되어 커밋메세지를 수정할 수 있다.
+  - `i`: 입력모드로 변환
+  - `Esc`: 입력모드 종료
+  - `:wq`: write quit, 수정 종료
 
 
 
