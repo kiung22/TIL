@@ -18,8 +18,20 @@
 - `django-admin startproject <프로젝트 이름>`: 프로젝트 생성하는 명령어, 서버가 만들어진다.
 
 - `python manage.py runserver`: 서버활성화
+
 - `python manage.py startapp <앱 이름>`: 앱 생성
+  
   - `settings.py`의 `INSTALLED_APPS`에 앱 이름을 추가해주어야 한다.
+  
+  ```python
+  INSTALLED_APPS = [
+      # app,
+      # 3rd part app,
+      # django app,
+  ]
+  ```
+  
+  
 
 
 
@@ -218,7 +230,7 @@ class ArticleForm(forms.Form):
 
 - login, logout
 
-- 회원가입(UserCreationForm), 로그인(AuthenticationForm)
+- 회원가입(`UserCreationForm`), 로그인(`AuthenticationForm`), 회원정보수정(`UserChangeForm`)
 
 - `from django.contrib.auth.decorators import login_required`
 
@@ -250,9 +262,14 @@ class ArticleForm(forms.Form):
     - 현재 프로젝트에서 활성화된 user model을 반한
     - 커스텀한 user model이 있을 경우는 커스텀 user model, 그렇지 않으면 User를 참조
 
+  
 
+  ### 4. 비밀번호 변경
 
-
+  - `PasswordChangeForm` 사용
+  - `from django.contrib.auth import update_session_auth_hash`
+    - `update_session_auth_hash(request, form.user)`
+    - 비밀번호 변경 시 세션의 값은 그대로 남게되어 로그인이 풀리게 된다. 위의 함수를 사용해서 세션의 해쉬값을 갱신해주어서 로그인 상태가 유지되게 해주어야 한다.
 
 
 
