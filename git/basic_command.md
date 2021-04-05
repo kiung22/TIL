@@ -87,6 +87,14 @@
 
 
 
+### revert
+
+- `git revert <커밋 id>`
+
+- `reset`과는 다르게 커밋기록을 없애지는 않고 과거의 코드를 불러오는 명령어
+
+
+
 ### commit
 
 - `git commit -m "커밋메세지"`
@@ -119,6 +127,27 @@
 
 - `git pull origin master`
 - 다른 사람이 push한 코드를 다운로드
+
+
+
+### branch
+
+- `git branch`
+  - `branch` 목록 확인
+- `git branch <branch name>`
+  - `branch` 생성
+- `git switch <branch name>`
+  - `branch` 이동
+- `git branch -d <branch name>`
+  - `branch` 삭제
+  - 역할이 끝난 branch는 삭제해주자!
+
+
+
+### merge
+
+- `git merge <branch name>`
+  - 현재있는 branch로 합병시킨다.
 
 
 

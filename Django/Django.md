@@ -132,9 +132,11 @@
 ​	       `Class Name` . `Manager` . `QuerySet API`
 
 - [Queryset API](https://docs.djangoproject.com/en/3.1/ref/models/querysets/)
-
 - 크게 queryset으로 반환하는 메서드와 단일 객체를 반환하는 메서드로 나뉜다.
 - `Field lookup`: `get()`, `filter()`, `exclude()` 에 넣을 수 있는 다양한 조건
+- django는 lazy해서 퀴리셋을 만들어도 평가를 바로 하지는 않고 실질적으로 사용(if문, for문, 값 출력 등)될 때 평가한 후 캐시에 저장한다.
+  - `.exists()`: 캐시하지 않기 때문에 캐시가 필요하지 않을 경우에 사용
+  - `iterator()`: for문을 돌리는데 쿼리셋의 크기가 너무 클 때 사용, 데이터의 일부를 쪼개서 가져오므로 캐시메모리를 절약할 수 있다.
 
 
 
@@ -187,6 +189,39 @@ class ArticleForm(forms.Form):
 - 어떤 함수에 기능을 추가하고 싶을 떄, 함수를 수정하지 않고 기능을 연장해주는 함수
 - [django view decorators](https://docs.djangoproject.com/en/3.1/topics/http/decorators/)
 - GET방식이면 `@require_safe`, POST방식이면 `@require_POST`를 아니면 `@require_http_methods(['GET', 'POST'])`처럼 원하는 방식을 적어서 뷰함수 바로 위에 작성
+
+
+
+## fixture
+
+- 더미데이터를 관리
+- `<app>/fixtures/<app>/더미데이터`
+  - `templates` 폴더처럼 구조를 잡는다.
+- 더미데이터 적용
+
+```
+$ python manage.py loaddata <app>/더미데이터
+```
+
+- 더이데이터 파일 생성
+
+```
+$ python manage.py dumpdata > *.json
+```
+
+- 특정 앱만 생성
+
+```
+$ python manage.py dumpdata <appname> > *.json
+```
+
+- 특정 앱 제외
+
+```
+$ python manage.py dumpdata --exclude <appname> > *.json
+```
+
+
 
 
 
@@ -288,6 +323,96 @@ class ArticleForm(forms.Form):
   - 사용자 선호, 테마 등 세팅
 - 트래킹
   - 사용자 행동을 기록, 분석
+
+
+
+## Relationship fields
+
+- 모델간의 관계를 나타내는 필드
+- `ForeignKey()`: many to one
+  - 게시글, 댓글 등
+- `ManyToManyField()`: many to many
+  - 좋아요, 팔로우, 해쉬태그 등
+- `OneToOneField()`: one to one
+
+
+
+### 1. Foreign Key (외래 키)
+
+- RDBMS에서 한 테이블의 필드 중 다른 테이블의 행을 식별할 수 있는 키
+
+- 외래 키의 값은 반드시 부모 테이블의 유일한 값이어야 한다.(참조 무결성)
+
+  ```python
+  article = models.ForeignKey(Article, on_delete=models.CASCADE)
+  ```
+
+  - `on_delete`: 부모 객체가 삭제되었을때의 옵션
+  - `CASCADE`: 부모 객체가 삭제되면 삭제되면 참조하는 객체도 삭제
+  - `related_name`: 역참조 manager(`comment_set`)를 변경할 때 사용
+
+- 참조 시 `모델이름`의 manager를 사용
+
+  - `comment.article`
+
+- 역참조 시 `모델이름_set`의 manager를 사용
+
+  - `article.comment_set.all()`
+
+
+
+### 2. ManyToManyField
+
+- M : N 관계를 나타내는 데에 사용
+- `related_name`: 역참조시에 사용할 이름을 바꿔준다.
+- `through`: 중개테이블을 직접 만들어 사용해야 할 때 중개테이블의 이름을 설정해준다.
+- `symmetrical`: ManyToManyField가 동일한 모델을 가리키는 경우에는 역참조 매니저를 추가하지 않고 대칭적(symmetrical)이라고 간주한다. 대칭을 원하지 않으면 `symmetrical=False`로 설정
+- Related manager
+  - 같은 이름의 메서드여도 관계에 따라 다르게 동작함!
+  - `add()`, `remove()` 등
+
+
+
+
+
+## Custom User Model
+
+> [Customizing authentication in Django](https://docs.djangoproject.com/en/3.1/topics/auth/customizing/)
+
+- 새 프로젝트를 시작할 때 무조건 커스텀 유저모델을 설정해야 한다. 그 이유는 나중에라도 맞춤 설정이 가능하기 때문이다. 모든 migrations, 첫 migrate를 실행하기 전에 이 작업을 마쳐야 함!!
+
+- `settings.py`에서 `AUTH_USER_MODEL`의 값을 지정해주어야 한다.(기본값은 'auth.User')
+
+  ```python
+  AUTH_USER_MODEL = 'myapp.MyUser'
+  ```
+
+- `get_user_model()`: 설정한 유저 모델을 참조할 때 사용, User 객체를 반환
+
+- `settings.AUTH_USER_MODEL`: `models.py`에서 유저 모델을 참조할 때 사용 , 문자열을 반환
+
+  ```python
+  from django.conf import settings
+  
+  settings.AUTH_USER_MODEL
+  ```
+
+- migration 초기화
+
+  1. 모든 `migrations` 파일 삭제
+  2. `db.sqlite` 삭제
+
+
+
+
+
+## Custom Template Tags
+
+- [사용자정의 템플릿 태그](https://docs.djangoproject.comen/3.1/howto/custom-template-tags/)
+
+- 새로운 필터가 필요할 때 만들어서 사용할 수 있다.
+- 적용시킬 때에는 서버 재시작!
+- xss공격을 대비해서 사용자에게 받은 텍스트는 코드로 보지않고 일반 텍스트로 출력을 하게 된다. `{{ <변수>|safe }}`를 이용하면 코드로 실행하게 해준다.
 
 
 
