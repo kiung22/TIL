@@ -26,7 +26,9 @@
   ```python
   INSTALLED_APPS = [
       # app,
+      
       # 3rd part app,
+      
       # django app,
   ]
   ```
