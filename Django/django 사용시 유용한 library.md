@@ -12,3 +12,9 @@
 $ python manage.py seed <app> --number==<int>
 ```
 
+
+
+## 2. [Django Debug Toolbar](https://django-debug-toolbar.readthedocs.io/en/latest/index.html)
+
+- 웹상에서 디버깅할 수 있는 툴바를 생성해준다.
+
