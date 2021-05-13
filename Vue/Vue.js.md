@@ -152,3 +152,70 @@ $ npm run serve
 - components/
   - router에 매핑된 컴포넌트 내부에 작성하는 컴포넌트를 모아두는 폴더
 
+
+
+## Vuex
+
+- 상태(State)를 전역 저장소로 관리할 수 있도록 지원하는 라이브러리
+- 애플리케이션의 모들 컴포넌트에 대한 중앙 집중식 저장소 역할
+- 각 컴포넌트의 데이터를 독립적으로 관리할 때 생기는 단점을 해결하기 위함
+
+
+
+### State
+
+- data를 의미하며 애플리케이션의 핵심이 되는 요소
+- 각 컴포넌트에서 관리
+- DOM은 data에 반응하여 DOM을 렌더링
+
+
+
+### Vuex Core Concept
+
+#### 1. State
+
+- 중앙에서 관리하는 모든 상태 정보
+- Mutations에 정의된 메서드에 의해 변경
+- state가 변화하면 해당 state를 공유하는 컴포넌트의 DOM은 알아서 렌더링
+- 컴포넌트에서 `$store.state`로 필요한 데이터를 가져올 수 있다.
+
+
+
+#### 2. Actions
+
+- 컴포넌트가 `dispatch()` 메서드에 의해 호출
+- Backend API와 통신하여 Data Fetching 등의 작업(동기, 비동기 모두 포함)을 수행
+- context가 인자로 항상 넘어온다.
+  - store.js파일 내에 있는 모든 요소에 접근해서 속성 접근, 메서드 호출이 가능하지만 직접 변경하지는 않는다.
+- Mutations에 정의된 메서드를 `commit()` 메서드로 호출
+- state는 오로지 Mutations 메서드를 통해서만 조작!!
+
+
+
+#### 3. Mutations
+
+- Actions에서 `commit()` 메서드에 의해 호출
+- 비동기적으로 동작하면 state가 변화하는 시점이 달라질 수 있으므로 동기적인 코드만 작성!!
+- state가 인자로 항상 넘어온다.
+
+
+
+#### 4. Getters
+
+- 첫 번째 인자로 state로 들어옴
+
+- state를 변경하지 않고 활용하여 계산을 수행(computed와 유사)
+- getters 자체가 state 자체를 변경하지는 않는다.
+  - state를 특정한 조건에 따라 계산된 값만 가지고 있는다.
+
+### 컴포넌트 바인딩 헬퍼
+
+1. `mapState`
+2. `mapGetters`
+   - computed와 getters를 매핑
+3. `mapActions`
+   - methods와 actions를 매핑
+4. `mapMutations`
+
+
+
