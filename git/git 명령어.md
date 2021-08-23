@@ -95,6 +95,17 @@ $ git branch -u origin/main foo
 
 
 
+### git remote
+
+```
+$ git remote prune origin
+```
+
+- 로컬저장소에서 필요없는 origin/branch들을 제거해준다.
+- `git remote prune origin --dry-run` 옵션을 주면 제거할 origin/branch의 목록을 보여준다.
+
+
+
 ### git tag
 
 ```
